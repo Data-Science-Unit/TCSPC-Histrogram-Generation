@@ -158,7 +158,7 @@ if __name__ == "__main__":
 
     irf = IRF(path=IRF_PATH)
     pde = SpectralSensitivity(path=PDE_PATH)
-    emission_gen = Emission_Generator()
+    emission_gen = Emission_Generator(verbose=verbose)
 
     # Ensure the directories exist
     os.makedirs(BASE_PATH, exist_ok=True)
