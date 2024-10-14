@@ -27,9 +27,10 @@ Next lets create a new conda environment and install the necessary packages:
 
 ```sh
 conda create -n fluoro-data-sim python=3.11
-conda install numpy scipy matplotlib jupyter
+conda install numpy scipy matplotlib jupyter seaborn tqdm
 conda install -c conda-forge ipympl
 conda install pytorch torchvision torchaudio cpuonly -c pytorch
+pip install memory_profiler
 conda activate fluoro-data-sim
 ```
 
