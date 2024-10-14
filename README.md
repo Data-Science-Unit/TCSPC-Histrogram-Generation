@@ -52,9 +52,19 @@ In the scripts directory you can find three example scripts:
 - "single_random_fluoro.ipynb" : This jupyter notebook will guide you through the process of creating a single Tissue Fluorophore object with a random emission distribution and lifetime, and then simulating the histogram data of this fluorophore.
 
 - "single_random_fluoro_gen.py" : This python script will generate 10_000 samples of random fluorophore data (meaning randomly generated emission distribution and lifetime) and saving the data in the /data/sythetic-data directory, with a manifest file to keep track of emission distributions, lifetime and histogram values.
+    - This script has two arguments:
+        - --verbose: This argument will print logging info and display the histogram data
+        - --test: This argument will run the script in test mode, meaning only 1 sample will be generated.
+
+To test the single random fluorophore generation script runs:
+```sh
+conda activate fluoro-data-sim
+python scripts/single_random_fluoro_gen.py --test --verbose
+```
+
 
 ### Running the data generation python script
-When running the data generation script I recommend using [tmux](https://github.com/tmux/tmux/wiki) or (screen)[https://linuxize.com/post/how-to-use-linux-screen/] to allow the script to run in the background. Meaning if the terminal is accidentally closed the script will continue to run.
+When running the data generation script I recommend using [tmux](https://github.com/tmux/tmux/wiki) or [screen](https://linuxize.com/post/how-to-use-linux-screen/) to allow the script to run in the background. Meaning if the terminal is accidentally closed the script will continue to run.
 
 #### Tmux
 

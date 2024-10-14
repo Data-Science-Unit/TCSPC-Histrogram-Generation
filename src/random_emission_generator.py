@@ -13,7 +13,9 @@ class Emission_Generator:
     This class will be used to generate random B-Splines from the wavebounds of the TRFS device used in simulation (comes from the probe configuration)
     """
 
-    def __init__(self, bounds: Wavebounds = CHANNEL_RANGE) -> None:
+    def __init__(
+        self, bounds: Wavebounds = CHANNEL_RANGE, verbose: bool = False
+    ) -> None:
         self.bounds = bounds
 
         self.emission_bounds = None
@@ -34,7 +36,7 @@ class Emission_Generator:
         self.norm_xs = None
         self.norm_ys = None
 
-        self.generate_random_emission()
+        self.generate_random_emission(verbose=verbose)
 
     def generate_random_emission(
         self,
