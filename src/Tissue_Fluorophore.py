@@ -146,7 +146,7 @@ class Tissue_Fluorophore:
             cdf_values, x, bounds_error=False, fill_value="extrapolate"
         )
 
-        # plt.plot(cdf_values, x)
+        # plt.plot(x, cdf_values)
         # plt.show()
 
     # @profile
@@ -367,7 +367,7 @@ class Tissue_Fluorophore:
         self.data = data
 
         if use_spectral_sensitivity:
-            sensitivity_matrix = self.get_spectral_sensitivity_matrix()
+            sensitivity_matrix = self.get_spectral_sensitivity_matrix(verbose=verbose)
             self.sensitivity_matrix = sensitivity_matrix
             self.data = np.round(self.data * sensitivity_matrix).astype(int)
         self.data = self.data + bias_matrix if use_bias else self.data
@@ -440,21 +440,14 @@ class Tissue_Fluorophore:
 
         return data
 
-    def get_spectral_sensitivity_matrix(self) -> np.ndarray:
+    def get_spectral_sensitivity_matrix(self, verbose: bool = False) -> np.ndarray:
         """
         This function is used to obtain a matrix, of the same size as the data histogram,
         describing the probability of a photon being detect at a given wavelength
         """
-        print(f"Sensitivity Range: {self.spectral_sensitivity_range}")
-        print(f"Channel Range: {self.channel_range}")
-        # assert self.spectral_sensitivity_range[0] <= self.channel_range[0], "the spectral sensitivty (LOWER BOUND) range does not cover the fluorohpores range"
-        # assert self.spectral_sensitivity_range[1] >= self.channel_range[1], "the spectral sensitivty (UPPER BOUND) range does not cover the fluorophores range"
-        if (self.spectral_sensitivity_range[0] > self.channel_range[0]) or (
-            self.spectral_sensitivity_range[1] < self.channel_range[1]
-        ):
-            warnings.warn(
-                "The channel range bounds are greater than the spectral sensitivty range, the bounds of the spectral sensitivity will be extended"
-            )
+        if verbose:
+            print(f"Sensitivity Range: {self.spectral_sensitivity_range}")
+            print(f"Channel Range: {self.channel_range}")
 
         sensor_range = np.linspace(*self.channel_range, self.num_channels)
         sensor_sensitivity = np.array(
@@ -518,27 +511,35 @@ class Tissue_Fluorophore:
 
         plt.show(block=block)
 
-    def save_data(self, file_name: str, num_samples: int, irf: IRF):
+    def save_data(
+        self,
+        file_name: str,
+        num_samples: int,
+        irf: IRF,
+        verbose: bool = False,
+        with_metadata: bool = True,
+    ):
         """
         This function will save the histogram data, along with the lifetime, emission spectra and IRF function as a csv file
         """
         # write the histogram data as csv
-        # np.savetxt(f"{file_name}.csv", self.data, delimiter=",")
         np.savez_compressed(f"{file_name}.npz", self.data)
-        print(f"Data saved as {file_name}")
+        if verbose:
+            print(f"Data saved as {file_name}")
         # write the lifetime, emission spectra and IRF function as a csv
-        irf_meta = irf.get_irf_metadata()
-        probe_metadata = get_probe_metadata()
-        metadata = {
-            "num_samples": int(num_samples),
-            "probe_config": probe_metadata,
-            "fluorophore": self.n_fluorophore_get_metadata(),
-            "irf": irf_meta,
-        }
-        print(num_samples)
-        with open(f"{file_name}_metadata.json", "w") as f:
-            json.dump(metadata, f, indent=3)
-        print("Metadata saved")
+        if with_metadata:
+            irf_meta = irf.get_irf_metadata()
+            probe_metadata = get_probe_metadata()
+            metadata = {
+                "num_samples": int(num_samples),
+                "probe_config": probe_metadata,
+                "fluorophore": self.n_fluorophore_get_metadata(),
+                "irf": irf_meta,
+            }
+            with open(f"{file_name}_metadata.json", "w") as f:
+                json.dump(metadata, f, indent=3)
+            if verbose:
+                print("Metadata saved")
 
     def n_fluorophore_get_metadata(self) -> dict:
         """
@@ -547,7 +548,6 @@ class Tissue_Fluorophore:
         metadata = {
             "name": self.name,
             "avg_lifetime": self.average_lifetime,
-            "lifetime_std": self.std_lifetime,
             "emission_spectra": self.intensity_range.to_list(),
         }
         return metadata

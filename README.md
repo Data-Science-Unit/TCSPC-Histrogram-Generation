@@ -29,6 +29,7 @@ Next lets create a new conda environment and install the necessary packages:
 conda create -n data-simulation python=3.11
 conda install numpy scipy matplotlib jupyter
 conda install -c conda-forge ipympl
+conda install pytorch torchvision torchaudio cpuonly -c pytorch
 conda activate 
 ```
 

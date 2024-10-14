@@ -133,7 +133,9 @@ class IRF:
         return self.mu_lifetimes[index]
 
     def lookup(self, wavelength: float, num_samples: int = 2_000) -> float:
-        wavelength_index = (wavelength - CHANNEL_RANGE[0]) / CHANNEL_WIDTH
+        wavelength_index = np.round(
+            (wavelength - CHANNEL_RANGE[0]) / CHANNEL_WIDTH
+        ).astype(int)
         mu = self.mu_lifetimes[wavelength_index]
         return np.random.normal(mu, DEFAULT_SIGMA_PER_CHANNEL, num_samples)
 
