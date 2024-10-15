@@ -100,6 +100,7 @@ def generate_random_fluoro(
     manifest_path: str,
     verbose: bool = False,
 ):
+    emission_gen.generate_random_emission()
     photon_count = np.random.randint(*PHOTON_COUNT_BOUNDS)
     lifetime = np.round(np.random.uniform(0.1, 10), 2)
     time = dt.datetime.now().strftime("%Y-%m-%d|%H-%M-%S-%f")
