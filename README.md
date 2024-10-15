@@ -59,7 +59,8 @@ In the scripts directory you can find three example scripts:
 To test the single random fluorophore generation script runs:
 ```sh
 conda activate fluoro-data-sim
-python scripts/single_random_fluoro_gen.py --test --verbose
+cd scripts
+python single_random_fluoro_gen.py --test --verbose
 ```
 
 
@@ -76,7 +77,8 @@ tmux new -s fluoro-data-sim
 Then you can run the data generation script with:
 ```sh
 conda activate fluoro-data-sim
-python scripts/single_random_fluoro_gen.py
+cd scripts
+python single_random_fluoro_gen.py
 ```
 
 You can then detach from the tmux session with (meaning ctrl+b then d):
@@ -98,7 +100,8 @@ screen -S fluoro-data-sim
 Then you can run the data generation script with:
 ```sh
 conda activate fluoro-data-sim
-python scripts/single_random_fluoro_gen.py
+cd scripts
+python single_random_fluoro_gen.py
 ```
 
 You can then detach from the screen session with (meaning ctrl+a then d):
