@@ -3,5 +3,5 @@
 .vscode
 data/synthetic-data/*
 data/emission_distributions/*
-
 __pycache__/
+*.pyc
