@@ -141,7 +141,7 @@ class Emission_Generator:
         :return: metadata : dict
         """
         return {
-            "bounds": self.bounds.to_list(),
+            "bounds": self.emission_bounds.to_list(),
             "t": self.t.tolist(),
             "c": self.c.tolist(),
             "xs": self.xs.tolist(),
@@ -211,3 +211,4 @@ if __name__ == "__main__":
         "../data/emission_distributions/test_emission.npz"
     )
     assert temp == emission_generator.get_emission_metadata()
+    print(emission_generator.get_emission_metadata())
