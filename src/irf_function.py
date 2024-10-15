@@ -130,7 +130,7 @@ class IRF:
         """
         This function will look up the mu value of the IRF at a given wavelength
         """
-        return self.mu_lifetimes[index]
+        return self.mu_lifetimes[index.cpu().numpy()]
 
     def lookup(self, wavelength: float, num_samples: int = 2_000) -> float:
         wavelength_index = np.round(
