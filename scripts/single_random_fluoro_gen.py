@@ -100,7 +100,7 @@ def generate_random_fluoro(
     manifest_path: str,
     verbose: bool = False,
 ):
-    emission_gen.generate_random_emission()
+    emission_gen.generate_random_emission(verbose=verbose)
     photon_count = np.random.randint(*PHOTON_COUNT_BOUNDS)
     lifetime = np.round(np.random.uniform(0.1, 10), 2)
     time = dt.datetime.now().strftime("%Y-%m-%d|%H-%M-%S-%f")
@@ -159,7 +159,7 @@ if __name__ == "__main__":
 
     irf = IRF(path=IRF_PATH)
     pde = SpectralSensitivity(path=PDE_PATH)
-    emission_gen = Emission_Generator(verbose=verbose)
+    emission_gen = Emission_Generator()
 
     # Ensure the directories exist
     os.makedirs(BASE_PATH, exist_ok=True)
