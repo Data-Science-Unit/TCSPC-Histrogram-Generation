@@ -14,7 +14,7 @@ These setting can be configured in the probe-config.py file.
 
 The package will also simulate properties of the device:
 -  PDE (Photon Dectector Efficency), recreated from Erdogan et al 2019 Figure 15.2. This option will reduce the number of photons simulated and aggretated in the histogram by a scalor taken from the PDE function.
-- IRF, we simulate the IRF using a Guassian function, allowing the user to provied a wavelength dependent $/mu$ and $/sigma$
+- IRF, we simulate the IRF using a Guassian function, allowing the user to provied a wavelength dependent $\mu$ and $\sigma$
 
 This package allows for PDE (Photon Dectector Efficency), recreated from Erdogan et al 2019 Figure 15.2, to be generated and a Poission noise to be added to the samples.
 
