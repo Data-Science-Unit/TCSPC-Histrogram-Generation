@@ -89,11 +89,6 @@ class Emission_Generator:
         self.norm_spline = make_interp_spline(
             norm_homogenous_points, y_locations, k=degree
         )
-        norm_scale_factor = quad(self.norm_spline, 0, 1)[0]
-        y_locations = y_locations / norm_scale_factor
-        self.norm_spline = make_interp_spline(
-            norm_homogenous_points, y_locations, k=degree
-        )
 
         self.norm_t = self.norm_spline.t
         self.norm_c = self.norm_spline.c
@@ -166,7 +161,7 @@ class Emission_Generator:
         This function will be used to load the metadata of the emission distribution from a npz file
         """
         data = np.load(file_path)
-        self.bounds = Wavebounds(*data["bounds"])
+        self.emission_bounds = Wavebounds(*data["bounds"])
         self.t = data["t"]
         self.c = data["c"]
         self.xs = data["xs"]
@@ -202,8 +197,7 @@ class Emission_Generator:
 
 if __name__ == "__main__":
     # Generate a random emission distribution
-    emission_generator = Emission_Generator()
-    emission_generator.generate_random_emission(verbose=True)
+    emission_generator = Emission_Generator(verbose=True)
     temp = emission_generator.get_emission_metadata()
     emission_generator.save_emission_metadata("test", "../data/emission_distributions")
     emission_generator.generate_random_emission(verbose=True)
@@ -211,4 +205,3 @@ if __name__ == "__main__":
         "../data/emission_distributions/test_emission.npz"
     )
     assert temp == emission_generator.get_emission_metadata()
-    print(emission_generator.get_emission_metadata())
